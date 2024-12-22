@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import authRouter from "./routes/auth.route.js";
+import noteRouter from "./routes/note.route.js";
 import cors from "cors";
 
 //now making server 
@@ -28,6 +29,7 @@ app.listen(PORT, () => {
 //import routes 
 
 app.use("/api/auth", authRouter);
+app.use("/api/note", noteRouter);
 
 //error handling 
 
