@@ -19,8 +19,8 @@ const app = express();
 //to make input as joson doubt 
 app.use(express.json());
 app.use(cookieParser());//why?
-app.use(cors({origin : "*"}));
-const PORT = 3000
+app.use(cors({origin : "http://localhost:5173", credentials: true}));
+const PORT =  process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`server is running on ${PORT}`);
   

@@ -76,11 +76,11 @@ export const editNote = async (req, res, next) => {
 export const allNote = async (req, res, next) => {
   const userId = req.user.id; //to show only log in user their notes
   try {
-    const allNotes = await Note.find({ userId: userId }).sort({ isPinned: -1 }); //it means that pinned notes will appears first i.e descending order
+    const notes = await Note.find({ userId: userId }).sort({ isPinned: -1 }); //it means that pinned notes will appears first i.e descending order
     res.status(200).json({
       success: true,
       message: "Fetched all notes with respective thei user id",
-      allNotes,
+      notes,
     });
   } catch (err) {
     return next(err);

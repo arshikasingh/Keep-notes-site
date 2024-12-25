@@ -1,14 +1,56 @@
 import React, { useState } from "react";
 import PasswordInput from "../../components/Input/PasswordInput";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { validateEmail } from "../../utils/helper";
+import {
+  signInFailure,
+  signInStart,
+  signInSuccess,
+} from "../../redux/user/userSlice";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { API_URL } from "../../utils/apiConfig";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const handleLogin = () => {
-    navigate("/");
+  const dispatch = useDispatch();
+  //login api functionality
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address");
+      return;
+    }
+    if (!password) {
+      setError("Please enter the password");
+      return;
+    }
+    setError("");
+    try {
+      //TODO
+      dispatch(signInStart());
+      const res = await axios.post(
+        `${API_URL}/api/auth/signin`,
+        { email, password },
+        { withCredentials: true }
+      );
+      if (res.data.success === false) {
+        toast.error(res.data.message);
+        dispatch(signInFailure(data.message)); //TODO
+      }
+      toast.success(res.data.message);
+      dispatch(signInSuccess(res.data));
+      navigate("/");
+    } catch (err) {
+      console.log(err.message);
+      toast.error(err.message);
+      dispatch(signInFailure(err.message));
+    }
   };
   return (
     <div className="flex  items-center justify-center mt-28 border">

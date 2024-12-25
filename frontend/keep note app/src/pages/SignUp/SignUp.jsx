@@ -11,6 +11,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+ 
   const handleSignUp = async (e) => {
     e.preventDefault(); //to stop the default reloading behaviour
     if (!name) {
@@ -30,7 +31,7 @@ const SignUp = () => {
     //signup api
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/auth/signup",
+        `${API_URL}/api/auth/signup`,
         { userName: name, email, password },
         { withCredentials: true }
       );
@@ -45,7 +46,7 @@ const SignUp = () => {
 
       navigate("/login");
     } catch (err) {
-      toast.error(res.data.message);
+      toast.error(err.message);
       console.log("error in signup", err.message);
       setError(err.message);
     }

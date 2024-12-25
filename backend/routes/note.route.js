@@ -13,7 +13,7 @@ const router = express.Router();
 router.post("/add", verifyToken, addNote);
 router.post("/edit/:noteId", verifyToken, editNote);
 router.get("/all", verifyToken, allNote);
-router.post("/delete/:noteId", verifyToken, deleteNote);
+router.delete("/delete/:noteId", verifyToken, deleteNote);
 router.put("/update-note-pinned/:noteId", verifyToken, updatePinnedNote);
 router.get("/search", verifyToken, searchNote);
 
